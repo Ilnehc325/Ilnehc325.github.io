@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="##一、QT简介###1.1 什么是QT  Qt（官方发音 [kju:t]，音同 cute）是一个跨平台的 C++ 开发 库，主要用来开发图形用户界面（Graphical User Interface， GUI）程序，当然也可以开发不带界面的命令行（Command User Interface，CUI）程序。 Qt 是纯 C++ 开发的，所以学好 C++ 非常有必要，对于不了 解 C++ 的读者，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2022/03/29/Introduction%20to%20QT/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="##一、QT简介###1.1 什么是QT  Qt（官方发音 [kju:t]，音同 cute）是一个跨平台的 C++ 开发 库，主要用来开发图形用户界面（Graphical User Interface， GUI）程序，当然也可以开发不带界面的命令行（Command User Interface，CUI）程序。 Qt 是纯 C++ 开发的，所以学好 C++ 非常有必要，对于不了 解 C++ 的读者，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/03/29/Introduction%20to%20QT/Introduction%20to%20QT/2.png">
+<meta property="article:published_time" content="2022-03-29T02:56:22.793Z">
+<meta property="article:modified_time" content="2022-03-29T06:31:29.719Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/03/29/Introduction%20to%20QT/Introduction%20to%20QT/2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Introduction to QT" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/29/Introduction%20to%20QT/" class="article-date">
+  <time class="dt-published" datetime="2022-03-29T02:56:22.793Z" itemprop="datePublished">2022-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>##一、QT简介<br>###1.1 什么是QT</p>
+<ul>
+<li>Qt（官方发音 [kju:t]，音同 cute）是一个跨平台的 C++ 开发 库，主要用来开发图形用户界面（Graphical User Interface， GUI）程序，当然也可以开发不带界面的命令行（Command User Interface，CUI）程序。</li>
+<li>Qt 是纯 C++ 开发的，所以学好 C++ 非常有必要，对于不了 解 C++ 的读者，我建议先阅读《C 语言教程》，再阅读《C++ 教程》。C++ 是在 C 语言的基础上发展起来的，学完 C 语言就 学了 C++ 的一半了。</li>
+<li>Qt 还存在 Python、Ruby、Perl 等脚本语言的绑定， 也就是 说可以使用脚本语言开发基于 Qt 的程序。开源社区就是这样， 好东西就会被派生扩展，到处使用， 越来越壮大。</li>
+<li>Qt 支持的操作系统有很多，例如通用操作系统 Windows、 Linux、Unix，智能手机系统 Android、iOS、WinPhone， 嵌入 式系统 QNX、VxWorks 等等。</li>
+</ul>
+<p>###1.2 QT可以做什么</p>
+<ul>
+<li>Qt 虽然经常被当做一个 GUI 库，用来开发图形界面应用程序，但 这并不是 Qt 的全部；Qt 除了可以绘制漂亮的界面（包括控件、布 局、交互），还包含很多其它功能，比如多线程、访问数据库、图像 处理、音频视频处理、网络通信、文件操作等，这些 Qt 都已经内置了。</li>
+<li>Qt 是应用程序开发的一站式解决方案，有了 Qt，你就可以高枕无 忧了！Qt 本身包含的模块也日益丰富， 一直有新模块和第三方模 块加入进来。 大部分应用程序都可以使用 Qt 实现，除了与计算机底层结合特别 紧密的，例如驱动开发，它直接使用硬件提供的编程接口，而不能使 用操作系统自带的函数库。</li>
+<li>1997 年，Qt 被用来开发 Linux 桌面环境 KDE，大获成功，使 Qt 成 为 Linux 环境下开发 C++ GUI 程序的事实标准。 </li>
+<li>下面的程序都使用 Qt 开发：WPS、YY 语音、Skype、豆瓣电台、 虾米音乐、淘宝助理、千牛、暴雪的战网客户端、VirtualBox、Opera、 咪咕音乐、Google 地图、Adobe Photoshop Album 等。 </li>
+<li>Linux 也是嵌入式的主力军，广泛应用于消费类电子、工业控制、军 工电子、电信&#x2F;网络&#x2F;通讯、航空航天、汽车电子、医疗设备、仪器仪 表等相关行业。 </li>
+<li>Qt 虽然也支持手机操作系统，但是由于 Android 本身已经有 Java 和 Kotlin，iOS 本身已经有 Objective-C 和 Swift，所以 Qt 在移动端的市场份额几乎可以忽略。</li>
+<li><font color="red">总起来说，Qt 主要用于桌面程序开发和嵌入式开发。</font></li>
+</ul>
+<p>###1.3 QT和其他GUI库的对比</p>
+<ul>
+<li>Windows 下的 GUI 库<ul>
+<li>Windows 下的 GUI 解决方案比较多：<ul>
+<li>基于 C++ 的有 Qt、MFC、WTL、wxWidgets、DirectUI、 Htmlayout； </li>
+<li>基于 C# 的有 WinForm、WPF；  基于 Java 的有 AWT、Swing； </li>
+<li>基于 Pascal 的 有 Delphi； </li>
+<li>基于 Go 语言的有 walk 和 electron；  还有国内初露头角的 aardio； </li>
+<li>Visual Basic 曾经很流行，现在逐渐失去了色彩； </li>
+<li>如果你有 Web 开发经验，也可以基于 Webkit 或 Chromium 将网页转换为桌面程序。</li>
+</ul>
+</li>
+<li>用 Qt 来开发 Windows 桌面程序有以下优点：<ul>
+<li>简单易学：Qt 封装的很好，几行代码就可以开发出一个简单 的客户端，不需要了解 Windows API。 </li>
+<li>资料丰富：资料丰富能够成倍降低学习成本，否则你只能去看 源码，关于 DirectUI、Htmlayout、aardio 的资料就很少。 </li>
+<li>漂亮的界面：Qt 很容易做出漂亮的界面和炫酷的动画，而 MFC、WTL、wxWidgets 比较麻烦。 </li>
+<li>独立安装：Qt 程序最终会编译为本地代码，不需要其他库的 支撑，而 Java 要安装虚拟机，C# 要安装 .NET Framework。</li>
+<li>跨平台：如果你的程序需要运行在多个平台下，同时又希望降 低开发成本，Qt 几乎是必备的。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Linux 下的 GUI 库<ul>
+<li>Linux 下 常 用 的 GUI 库 有 基 于 C++ 的 Qt 、 GTK+ 、 wxWidgets，以及基于 Java 的 AWT 和 Swing。其中最著名的就是 Qt 和 GTK+：KDE 桌面系统已经将 Qt 作为默认的 GUI 库，Gnome 桌面系统也将 GTK+ 作为默认的 GUI 库。</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、QT下载"><a href="#二、QT下载" class="headerlink" title="二、QT下载"></a>二、QT下载</h2><p>Qt 官网有一个专门的资源下载网站，所有的开发环境和相关工具都 可以从这里下载，具体地址是：<a target="_blank" rel="noopener" href="http://download.qt.io/">http://download.qt.io/</a></p>
+<p>![avatar](Introduction to QT&#x2F;1.png)</p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>archive</td>
+<td>各种 Qt 开发工具安装包，新旧都有(可以下载 Qt 开发环境和源代码)</td>
+</tr>
+<tr>
+<td>community_releases</td>
+<td>社区定制的 Qt 库，Tizen 版 Qt 以及 Qt 附加 源码包。</td>
+</tr>
+<tr>
+<td>development_releases</td>
+<td>开发版，有新的和旧的不稳定版本，在 Qt 开发 过程中的非正式版本。</td>
+</tr>
+<tr>
+<td>learning</td>
+<td>有学习 Qt 的文档教程和示范视频。</td>
+</tr>
+<tr>
+<td>ministro</td>
+<td>迷你版，目前是针对 Android 的版本。</td>
+</tr>
+<tr>
+<td>official_releases</td>
+<td>正式发布版，是与开发版相对的稳定版 Qt 库和 开发工具（可以下载 Qt 开发环境和源代码）。</td>
+</tr>
+<tr>
+<td>online Qt</td>
+<td>在线安装源。</td>
+</tr>
+<tr>
+<td>snapshots</td>
+<td>预览版，最新的开发测试中的 Qt 库和开发工具。</td>
+</tr>
+</tbody></table>
+<ul>
+<li>archive 和 official_releases 两个目录都有最新的 Qt 开发环境 安装包</li>
+</ul>
+<img src="Introduction to QT/2.png" />
+
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>vsaddin</td>
+<td>这是 Qt 针对 Visual Studio 集成的插件，本教程基本不 使用 Visual Studio ，所以不需要插件。</td>
+</tr>
+<tr>
+<td>qtcreator</td>
+<td>这是 Qt 官方的集成开发工具，但是 qtcreator 本身是 个空壳，它没有编译套件和 Qt 开发库。除了老版本的 Qt 4 需要手动下载 qtcreator、编译套件、Qt 开发库进行 搭配之外，一般用不到。对于我们教程压根不需要下载它， 因为 Qt 5 有专门的大安装包，里面包含开发需要的东西， 并且能自动配置好。</td>
+</tr>
+<tr>
+<td>qt</td>
+<td>这是 Qt 开发环境的下载目录，我们刚说的 Qt 5 的大安 装包就在这里面。</td>
+</tr>
+<tr>
+<td>online_installers</td>
+<td>在线安装器，国内用户不建议使用，在线安装是龟速，还经常断线。我们教程采用的全部是离线的大安装包。</td>
+</tr>
+</tbody></table>
+<ul>
+<li>进入 qt 子目录 ，看到如下列表：</li>
+</ul>
+<p>![avatar](Introduction to QT&#x2F;3.png)</p>
+<ul>
+<li>进入 5.9 目录，会看到各种子版本：</li>
+</ul>
+<p>![avatar](Introduction to QT&#x2F;4.png)</p>
+<p>解释一下 Qt 的版本号，比如 5.9.8 是完整的 Qt 版本号，第一个 数字 5 是大版本号（major），第二个数字 9 是小版本号（minor）， 第三个数字 8 是补丁号（patch）。 只要前面两个数字相同，Qt 的 特性就是一致的，最后的数字是对该版本的补丁更新。也就是说本教 程对 5.9.* 系列的 Qt 都是通用的，下载 5.9.* 任意一个版本都可 以，这里我们以下载 5.9.0。<br>![avatar](Introduction to QT&#x2F;5.png)</p>
+<p>以 Windows 安装包（qt-opensource-windows-x86-5.9.0.exe） 讲解一下 Qt 安装包命名规则，其中：opensource 是指开源版本； windows 是指开发环境的操作系统； x86 是指 32 位系统； 5.9.0 是 Qt 版本号。</p>
+<p>##三、Windows 下安装 QT<br>###3.1 注册和安装<br>Qt 在安装过程中会提示用户进行注册和登录，不用理会，跳过（Skip） 即可，实际开发时不需要登录。<br>![avatar](Introduction to QT&#x2F;6.png)<br>###3.2 安装路径和关联文件<br>![avatar](Introduction to QT&#x2F;7.png)</p>
+<p><font color="red">Qt 允许用户自定义安装路径，但是请注意，安装路径不能带空格、 中文字符或者其它任何特殊字符。</font><br>另外，该界面还会询问是否关联特定的文件类型。如果关联（默认是 关联的），特定后缀的文件（包括 .cpp 文件）默认使用 Qt 打开。<br>###3.3 选择安装组件<br>Qt 安装过程中最关键的一步是组件的选择:</p>
+<p>![avatar](Introduction to QT&#x2F;8.png)</p>
+<p>Qt 的安装组件分为两部分：一部分是“Qt 5.9”分类下的，该分类 包含的是真正的 Qt 开发库组件；另一部分是“Tools”分类下的:</p>
+<ul>
+<li>“Qt 5.9”分类下的开发组件:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MinGW 5.3.0 32 bit</td>
+<td>编译器模块。MinGW 是 Minimalist GNU for Windows 的 缩写，MinGW 是 Windows 平台上使用的 GNU 工具集导 入库的集合。是本教程使用 MinGW 编译，所以必须安装。</td>
+</tr>
+<tr>
+<td>UWP ***</td>
+<td>UWP 是 Windows 10 中 Universal Windows Platform 的简称，有不同编译器类型的 UWP，属于 MSVC 编译器生 成的 Qt 库。如果不是开发 UWP 应用程序，就不需要，直接忽略。</td>
+</tr>
+<tr>
+<td>MSVC ***</td>
+<td>针对 Windows 平台上的 MSVC 编译器的 Qt 组件，如 msvc2015 32-bit 和 msvc2015 64-bit 等。安装该组件需要 计算机上已经安装相应版本的 Visual Studio。如果你不使用 MSVC 编译器进行开发，就不用安装。本教程使用 MinGW 编译组件，所以不用安装 MSVC *** 组件。</td>
+</tr>
+<tr>
+<td>Android ***</td>
+<td>这是针对安卓应用开发的 Qt 库，如果读者有安卓开发这方 面需求可以自己选择安装，一般情况下用不到。</td>
+</tr>
+<tr>
+<td>Sources</td>
+<td>Qt 的源代码包，除非你想阅读 Qt 的源码，否则不用安装。</td>
+</tr>
+<tr>
+<td>Qt ***</td>
+<td>Qt 的附加模块，大部分建议安装，这些附加模块括号里的 TP 是指 Technology Preview ，技术预览模块的意思，还处在 功能测试阶段，不是正式版模块；附加模块括号里的 Deprecated 是指抛弃的旧模块，兼容旧代码使用的，一般 用不到。这些附加模块读者可以选择部分或都勾选了安装， 占用空间不大。 部分组件说明：  Qt Charts 是二维图表模块，用于绘制柱状图、饼图、 曲线图等常用二维图表。  Qt Data Visualization 是三维数据图表模块，用于数 据的三维显示，如散点的三维空间分布、三维曲面等。  Qt Scritp（Deprecated）是脚本模块，已被抛弃， 不建议安装。</td>
+</tr>
+</tbody></table>
+<ul>
+<li>“Tools”分类下的开发组件:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qt Creator 4.3.0</td>
+<td>这是集成开发环境，强制安装的，以后所有的项目和代码都 在 Qt Creator 里面新建和编辑。</td>
+</tr>
+<tr>
+<td>Qt Creator 4.3.0 CDB Debugger surpport</td>
+<td>用于和 CDB 调试工具对接，默认安装，一般用于调试 VC 编译的 Qt 程序。</td>
+</tr>
+<tr>
+<td>MinGW 5.3.0</td>
+<td>这是开源的编译器套件，这本教程必须用到的，需要读者勾 选安装。</td>
+</tr>
+<tr>
+<td>Strawberry Perl 5.22.1.3</td>
+<td>用于编译 Qt 源代码的 Perl 开发环境，不需要安装。如果读 者以后用到，也可以另外手动安装，在搜索引擎搜索 Strawberry Perl 关键词，去 Strawberry Perl 官网下载最新 的安装包是一样用的。</td>
+</tr>
+</tbody></table>
+<p>安装完成后，在 Windows“开始”菜单中会看到 Qt 程序组。</p>
+<p>![avatar](Introduction to QT&#x2F;9.png)</p>
+<table>
+<thead>
+<tr>
+<th>程序</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qt Creator 4.11.0 (Community)</td>
+<td>Qt 的集成开发环境，本教程就使用它来创建和管理 Qt 项目。</td>
+</tr>
+<tr>
+<td>Assistant（Qt 助手）</td>
+<td>用来查看帮助文档，已被集成在 Qt Creator 中。</td>
+</tr>
+<tr>
+<td>Designer（Qt 设计师）</td>
+<td>图形界面可视化编辑工具，已被集成在 Qt Creator 中，在 Qt Creator 中编辑或创建界面文件时，就 可以自动打开。</td>
+</tr>
+<tr>
+<td>Linguist（Qt 语言家）</td>
+<td>多国语言翻译支持工具，可以用来编辑语言资源文 件，在开发多语言界面的应用程序时会用到。</td>
+</tr>
+<tr>
+<td>Qt 5.9.9 for Desktop (MinGW 5.3.0 32bit)</td>
+<td>Qt 命令行工具，用来配置 Qt 开发环境（主要是设 置 PATH 变量）。</td>
+</tr>
+</tbody></table>
+<p>##四、第一个QT程序<br>###4.1 新建一个项目<br>单击 Qt Creator 的菜单项文件-&gt;新建文件或项目，出现如图 1 所 示的对话框。在这个对话框里选择需要创建的项目或文件的模板。</p>
+<p>![avatar](Introduction to QT&#x2F;10.png)<br>![avatar](Introduction to QT&#x2F;11.png)</p>
+<ul>
+<li>项目名称不能有空格和中文</li>
+</ul>
+<ul>
+<li>01 Qt 第一天 ——&gt; 错误的，有空格和中文 </li>
+<li>01_Qt_the First Day ——&gt; 错误的，有空格 </li>
+<li>01_HelloWorld ——&gt; 正确的</li>
+</ul>
+<ul>
+<li>路径不能有中文</li>
+</ul>
+<ul>
+<li>&#x2F;home&#x2F;vistar&#x2F;桌面&#x2F;Qt ——&gt; 错误的，有中文 </li>
+<li>&#x2F;home&#x2F;vistar&#x2F;desktop&#x2F;Qt ——&gt; 正确的</li>
+</ul>
+<p>![avatar](Introduction to QT&#x2F;12.png)</p>
+<p> 选择 build system，有 qmake、CMake 和 Qbs 三个选项。 CMake 很常用，功能也很强大，许多知名的项目都是用它，比如 OpenCV 和 VTK，但它的语法繁杂。 qmake 是针对辅助 Qt 开发的，但也可以在非 Qt 项目使用，特 点是语法简单明了，但功能也相对简单。 Qbs 号称下一代构建工具，也有好多人力捧 Qbs，没用过。 这里选择默认的 qmake，下一步：</p>
+<p> ![avatar](Introduction to QT&#x2F;13.png)</p>
+<p> 这里设置类信息，首先 Class name 是自定义的，而且下面的 Header file、Source file 和 From file 的名称会根据自定义的 Class name 自动修改。 然后是 Base clas（s 基类），有三个基类供选择，QMainWindow、 QWidget 和 QDialog，QMainWindow 和 QDialog 是 QWidget 的两个派生类，可以理解为都是窗口，但窗口样式不同。</p>
+<p>![avatar](Introduction to QT&#x2F;14.png)</p>
+<p>这里可以为你的项目创建一个翻译文件，将你的应用界面翻译成其他 语言，不使用默认 none 就好，下一步：</p>
+<p>![avatar](Introduction to QT&#x2F;15.png)</p>
+<p>选择编译套件，如有多个，按你需要的选择，下一步：</p>
+<p>![avatar](Introduction to QT&#x2F;16.png)</p>
+<p>添加版本控制系统，如不使用，默认 None 即可，同时汇总了要创 建的文件即路径，可以检查是否有误，点击完成。</p>
+<p>进入到代码编辑界面：</p>
+<p>![avatar](Introduction to QT&#x2F;17.png)</p>
+<p>窗口左侧有上下两个子窗口，上方的目录树显示了项目内文件的组织 结构，显示当 前项目为 Demo。项目的名称构成目录树的一个根节 点，Qt Creator 可以打开多个项目，但是只有一个活动项目，活动项目的项目名称节点用粗体字体表示。 </p>
+<p>在项目名称节点下面，分组管理着项目内的各种源文件，几个文件及分组分别为以下几项：</p>
+<ul>
+<li>Demo.pro 是项目管理文件，包括一些对项目的设置项。 </li>
+<li>Headers 分组，该节点下是项目内的所有头文件（.h），图中所示项目有一个头文件 mainwindow.h，是主窗口类的头文件 </li>
+<li>Sources 分组：该节点下是项目内的所有 C++源文件（.cpp）， 上图所示项目有两个 C++ 源文件，mainwindow.cpp 是主窗口 类的实现文件，与 mainwindow.h 文件对应。main.cpp 是主函数文件，也是应用程序的入口。 </li>
+<li>Forms 分组：该节点下是项目内的所有界面文件（.ui）。图中所示项目有一个界面文件 mainwindow.ui，是主窗口的界面文件。界面文件是文本文件，使用 XML 语言描述界面的组成。</li>
+</ul>
+<p>双击文件目录树中的文件 mainwindow.ui</p>
+<p>![avatar](Introduction to QT&#x2F;18.png)</p>
+<p>这个界面实际上是 Qt Creator 中集成的 Qt Designer。窗口左侧是 分组的组件面板，中间是设计的窗体。在组件面板的 Display Widgets 分组里，将一个 Label 组件拖放到设计的窗体上面。双击刚 刚放置的 Label 组件，可以编辑其文字内容，将文字内容更改为 “Hello, World!”。还可以在窗口右下方的属性编辑器里编辑标签的 Font 属性，Point Size（点大小）更改为 12，勾选粗体。</p>
+<p>###4.2 项目的编译、调试与运行</p>
+<p>![avatar](Introduction to QT&#x2F;19.png)</p>
+<p>界面左侧一栏的“Build &amp; Run”下面显示了本项目中可用的编译器工 具，要使用哪一个编译器用于项目编译，单击其名称即可，选择的编 译器名称会用粗体字表示。这里选择使用 MinGW 32bit 编译器。 </p>
+<p>每个编译器又有 Build 和 Run 两个设置界面。在 Build 设置界面 上，有一个“Shadow build” 复选框。如果勾选此项，编译后将在项 目的同级目录下建立一个编译后的文件目录，目录名称包含编译器信 息，这种方式一般用于使用不同编译器创建不同版本的可执行文件。 如果不勾选此项，编译后将在项目的目录下建立“Debug”和 “Release”子目录用于存放编译后的文件。</p>
+<p>在设计完 mainwindow.ui 文件，并设置好编译工具之后，就可以对 项目进行编译、调试或运行。主窗口左侧工具栏下方有 4 个按钮:<br>![avatar](Introduction to QT&#x2F;20.png)</p>
+<h3 id="4-3-QT程序打包"><a href="#4-3-QT程序打包" class="headerlink" title="4.3 QT程序打包"></a>4.3 QT程序打包</h3><p>打包 Qt 程序，通常选用以 release 模式生成的可执行文件。和 debug 模式相比，release 模式生成的可执行文件体积更小，运行效 率更快。 </p>
+<p>Qt Creator 默认以 debug 模式生成可执行文件，如下图所示， 可以手动修改 Qt Creator 以 release 模式生成可执行文件：<br>![avatar](Introduction to QT&#x2F;21.png)<br>![avatar](Introduction to QT&#x2F;22.png)</p>
+<p>此时的 demo.exe 是无法运行的，双击它系统会提示类似“找不到 xxx.dll”的错误信息</p>
+<p>找到可执行文件之后，将其拷贝到一个空的文件夹， D:\QtDemo 文 件夹中</p>
+<p>![avatar](Introduction to QT&#x2F;23.png)</p>
+<p>在“开始”中找到 Qt 命令行程序并打开</p>
+<p>![avatar](Introduction to QT&#x2F;24.png)<br>![avatar](Introduction to QT&#x2F;25.png)</p>
+<p>在命令行中，先执行 “cd D:\QtDemo” 命令进入 QtDemo 文件夹， 然后再执行 “windeployqt demo.exe” 命令。 </p>
+<p><font color="red">windeployqt 是 Qt 提供的 Windows 平台打包工具，它能找到 demo.exe 可执行文件需要的所有动态链接库，并将它们拷贝到当 前文件夹中。</font></p>
+<p>![avatar](Introduction to QT&#x2F;26.png)</p>
+<p>成功执行命令之后，QtDemo 文件夹内会增加很多文件夹和文件，这些都是 demo.exe 执行所需要的。</p>
+<p>![avatar](Introduction to QT&#x2F;27.png)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/29/Introduction%20to%20QT/" data-id="cl1c0s93b0000q9wsf6pk9ry2" data-title="" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/03/25/Create%20and%20call%20dll%20methods/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/29/Introduction%20to%20QT/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/25/Create%20and%20call%20dll%20methods/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
