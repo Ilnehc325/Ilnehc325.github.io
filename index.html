@@ -71,6 +71,44 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-QT数据库与QTableWidget结合的增删改查" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" class="article-date">
+  <time class="dt-published" datetime="2022-04-08T01:33:49.000Z" itemprop="datePublished">2022-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">QT数据库与QTableWidget结合的增删改查</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="cl1pr8wfs000085ws3erd6xzd" data-title="QT数据库与QTableWidget结合的增删改查" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Introduction to QT" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/03/29/Introduction%20to%20QT/" class="article-date">
@@ -125,7 +163,8 @@
 </li>
 </ul>
 <h2 id="二、QT下载"><a href="#二、QT下载" class="headerlink" title="二、QT下载"></a>二、QT下载</h2><p>Qt 官网有一个专门的资源下载网站，所有的开发环境和相关工具都 可以从这里下载，具体地址是：<a target="_blank" rel="noopener" href="http://download.qt.io/">http://download.qt.io/</a></p>
-<p>![avatar](Introduction to QT&#x2F;1.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/1.png">
+
 <table>
 <thead>
 <tr>
@@ -198,18 +237,22 @@
 <ul>
 <li>进入 qt 子目录 ，看到如下列表：</li>
 </ul>
-<p>![avatar](Introduction to QT&#x2F;3.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/3.png">
+
 <ul>
 <li>进入 5.9 目录，会看到各种子版本：</li>
 </ul>
-<p>![avatar](Introduction to QT&#x2F;4.png)</p>
-<p>解释一下 Qt 的版本号，比如 5.9.8 是完整的 Qt 版本号，第一个 数字 5 是大版本号（major），第二个数字 9 是小版本号（minor）， 第三个数字 8 是补丁号（patch）。 只要前面两个数字相同，Qt 的 特性就是一致的，最后的数字是对该版本的补丁更新。也就是说本教 程对 5.9.* 系列的 Qt 都是通用的，下载 5.9.* 任意一个版本都可 以，这里我们以下载 5.9.0。<br>![avatar](Introduction to QT&#x2F;5.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/4.png">
+
+<p>解释一下 Qt 的版本号，比如 5.9.8 是完整的 Qt 版本号，第一个 数字 5 是大版本号（major），第二个数字 9 是小版本号（minor）， 第三个数字 8 是补丁号（patch）。 只要前面两个数字相同，Qt 的 特性就是一致的，最后的数字是对该版本的补丁更新。也就是说本教 程对 5.9.* 系列的 Qt 都是通用的，下载 5.9.* 任意一个版本都可 以，这里我们以下载 5.9.0。<br><img src="/2022/03/29/Introduction%20to%20QT/5.png"></p>
 <p>以 Windows 安装包（qt-opensource-windows-x86-5.9.0.exe） 讲解一下 Qt 安装包命名规则，其中：opensource 是指开源版本； windows 是指开发环境的操作系统； x86 是指 32 位系统； 5.9.0 是 Qt 版本号。</p>
-<h2 id="三、Windows-下安装-QT"><a href="#三、Windows-下安装-QT" class="headerlink" title="三、Windows 下安装 QT"></a>三、Windows 下安装 QT</h2><h3 id="3-1-注册和安装"><a href="#3-1-注册和安装" class="headerlink" title="3.1 注册和安装"></a>3.1 注册和安装</h3><p>Qt 在安装过程中会提示用户进行注册和登录，不用理会，跳过（Skip） 即可，实际开发时不需要登录。<br>![avatar](Introduction to QT&#x2F;6.png)</p>
-<h3 id="3-2-安装路径和关联文件"><a href="#3-2-安装路径和关联文件" class="headerlink" title="3.2 安装路径和关联文件"></a>3.2 安装路径和关联文件</h3><p>![avatar](Introduction to QT&#x2F;7.png)</p>
+<h2 id="三、Windows-下安装-QT"><a href="#三、Windows-下安装-QT" class="headerlink" title="三、Windows 下安装 QT"></a>三、Windows 下安装 QT</h2><h3 id="3-1-注册和安装"><a href="#3-1-注册和安装" class="headerlink" title="3.1 注册和安装"></a>3.1 注册和安装</h3><p>Qt 在安装过程中会提示用户进行注册和登录，不用理会，跳过（Skip） 即可，实际开发时不需要登录。<br><img src="/2022/03/29/Introduction%20to%20QT/6.png"></p>
+<h3 id="3-2-安装路径和关联文件"><a href="#3-2-安装路径和关联文件" class="headerlink" title="3.2 安装路径和关联文件"></a>3.2 安装路径和关联文件</h3><img src="/2022/03/29/Introduction%20to%20QT/7.png">
+
 <p><font color="red">Qt 允许用户自定义安装路径，但是请注意，安装路径不能带空格、 中文字符或者其它任何特殊字符。</font><br>另外，该界面还会询问是否关联特定的文件类型。如果关联（默认是 关联的），特定后缀的文件（包括 .cpp 文件）默认使用 Qt 打开。</p>
 <h3 id="3-3-选择安装组件"><a href="#3-3-选择安装组件" class="headerlink" title="3.3 选择安装组件"></a>3.3 选择安装组件</h3><p>Qt 安装过程中最关键的一步是组件的选择:</p>
-<p>![avatar](Introduction to QT&#x2F;8.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/8.png">
+
 <p>Qt 的安装组件分为两部分：一部分是“Qt 5.9”分类下的，该分类 包含的是真正的 Qt 开发库组件；另一部分是“Tools”分类下的:</p>
 <ul>
 <li>“Qt 5.9”分类下的开发组件:</li>
@@ -274,7 +317,8 @@
 </tr>
 </tbody></table>
 <p>安装完成后，在 Windows“开始”菜单中会看到 Qt 程序组。</p>
-<p>![avatar](Introduction to QT&#x2F;9.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/9.png">
+
 <table>
 <thead>
 <tr>
@@ -304,7 +348,9 @@
 </tr>
 </tbody></table>
 <h2 id="四、第一个QT程序"><a href="#四、第一个QT程序" class="headerlink" title="四、第一个QT程序"></a>四、第一个QT程序</h2><h3 id="4-1-新建一个项目"><a href="#4-1-新建一个项目" class="headerlink" title="4.1 新建一个项目"></a>4.1 新建一个项目</h3><p>单击 Qt Creator 的菜单项文件-&gt;新建文件或项目，出现如图 1 所 示的对话框。在这个对话框里选择需要创建的项目或文件的模板。</p>
-<p>![avatar](Introduction to QT&#x2F;10.png)<br>![avatar](Introduction to QT&#x2F;11.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/10.png">
+<img src="/2022/03/29/Introduction%20to%20QT/11.png">
+
 <ul>
 <li>项目名称不能有空格和中文</li>
 </ul>
@@ -320,18 +366,24 @@
 <li>&#x2F;home&#x2F;vistar&#x2F;桌面&#x2F;Qt ——&gt; 错误的，有中文 </li>
 <li>&#x2F;home&#x2F;vistar&#x2F;desktop&#x2F;Qt ——&gt; 正确的</li>
 </ul>
-<p>![avatar](Introduction to QT&#x2F;12.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/12.png">
+
 <p> 选择 build system，有 qmake、CMake 和 Qbs 三个选项。 CMake 很常用，功能也很强大，许多知名的项目都是用它，比如 OpenCV 和 VTK，但它的语法繁杂。 qmake 是针对辅助 Qt 开发的，但也可以在非 Qt 项目使用，特 点是语法简单明了，但功能也相对简单。 Qbs 号称下一代构建工具，也有好多人力捧 Qbs，没用过。 这里选择默认的 qmake，下一步：</p>
-<p> ![avatar](Introduction to QT&#x2F;13.png)</p>
+ <img src="/2022/03/29/Introduction%20to%20QT/13.png">
+ 
 <p> 这里设置类信息，首先 Class name 是自定义的，而且下面的 Header file、Source file 和 From file 的名称会根据自定义的 Class name 自动修改。 然后是 Base clas（s 基类），有三个基类供选择，QMainWindow、 QWidget 和 QDialog，QMainWindow 和 QDialog 是 QWidget 的两个派生类，可以理解为都是窗口，但窗口样式不同。</p>
-<p>![avatar](Introduction to QT&#x2F;14.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/14.png">
+
 <p>这里可以为你的项目创建一个翻译文件，将你的应用界面翻译成其他 语言，不使用默认 none 就好，下一步：</p>
-<p>![avatar](Introduction to QT&#x2F;15.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/15.png">
+
 <p>选择编译套件，如有多个，按你需要的选择，下一步：</p>
-<p>![avatar](Introduction to QT&#x2F;16.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/16.png">
+
 <p>添加版本控制系统，如不使用，默认 None 即可，同时汇总了要创 建的文件即路径，可以检查是否有误，点击完成。</p>
 <p>进入到代码编辑界面：</p>
-<p>![avatar](Introduction to QT&#x2F;17.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/17.png">
+
 <p>窗口左侧有上下两个子窗口，上方的目录树显示了项目内文件的组织 结构，显示当 前项目为 Demo。项目的名称构成目录树的一个根节 点，Qt Creator 可以打开多个项目，但是只有一个活动项目，活动项目的项目名称节点用粗体字体表示。 </p>
 <p>在项目名称节点下面，分组管理着项目内的各种源文件，几个文件及分组分别为以下几项：</p>
 <ul>
@@ -341,25 +393,30 @@
 <li>Forms 分组：该节点下是项目内的所有界面文件（.ui）。图中所示项目有一个界面文件 mainwindow.ui，是主窗口的界面文件。界面文件是文本文件，使用 XML 语言描述界面的组成。</li>
 </ul>
 <p>双击文件目录树中的文件 mainwindow.ui</p>
-<p>![avatar](Introduction to QT&#x2F;18.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/18.png">
+
 <p>这个界面实际上是 Qt Creator 中集成的 Qt Designer。窗口左侧是 分组的组件面板，中间是设计的窗体。在组件面板的 Display Widgets 分组里，将一个 Label 组件拖放到设计的窗体上面。双击刚 刚放置的 Label 组件，可以编辑其文字内容，将文字内容更改为 “Hello, World!”。还可以在窗口右下方的属性编辑器里编辑标签的 Font 属性，Point Size（点大小）更改为 12，勾选粗体。</p>
-<h3 id="4-2-项目的编译、调试与运行"><a href="#4-2-项目的编译、调试与运行" class="headerlink" title="4.2 项目的编译、调试与运行"></a>4.2 项目的编译、调试与运行</h3><p>![avatar](Introduction to QT&#x2F;19.png)</p>
+<h3 id="4-2-项目的编译、调试与运行"><a href="#4-2-项目的编译、调试与运行" class="headerlink" title="4.2 项目的编译、调试与运行"></a>4.2 项目的编译、调试与运行</h3><img src="/2022/03/29/Introduction%20to%20QT/19.png">
+
 <p>界面左侧一栏的“Build &amp; Run”下面显示了本项目中可用的编译器工 具，要使用哪一个编译器用于项目编译，单击其名称即可，选择的编 译器名称会用粗体字表示。这里选择使用 MinGW 32bit 编译器。 </p>
 <p>每个编译器又有 Build 和 Run 两个设置界面。在 Build 设置界面 上，有一个“Shadow build” 复选框。如果勾选此项，编译后将在项 目的同级目录下建立一个编译后的文件目录，目录名称包含编译器信 息，这种方式一般用于使用不同编译器创建不同版本的可执行文件。 如果不勾选此项，编译后将在项目的目录下建立“Debug”和 “Release”子目录用于存放编译后的文件。</p>
-<p>在设计完 mainwindow.ui 文件，并设置好编译工具之后，就可以对 项目进行编译、调试或运行。主窗口左侧工具栏下方有 4 个按钮:<br>![avatar](Introduction to QT&#x2F;20.png)</p>
+<p>在设计完 mainwindow.ui 文件，并设置好编译工具之后，就可以对 项目进行编译、调试或运行。主窗口左侧工具栏下方有 4 个按钮:<br><img src="/2022/03/29/Introduction%20to%20QT/20.png"></p>
 <h3 id="4-3-QT程序打包"><a href="#4-3-QT程序打包" class="headerlink" title="4.3 QT程序打包"></a>4.3 QT程序打包</h3><p>打包 Qt 程序，通常选用以 release 模式生成的可执行文件。和 debug 模式相比，release 模式生成的可执行文件体积更小，运行效 率更快。 </p>
-<p>Qt Creator 默认以 debug 模式生成可执行文件，如下图所示， 可以手动修改 Qt Creator 以 release 模式生成可执行文件：<br>![avatar](Introduction to QT&#x2F;21.png)<br>![avatar](Introduction to QT&#x2F;22.png)</p>
+<p>Qt Creator 默认以 debug 模式生成可执行文件，如下图所示， 可以手动修改 Qt Creator 以 release 模式生成可执行文件：<br><img src="/2022/03/29/Introduction%20to%20QT/21.png"><br><img src="/2022/03/29/Introduction%20to%20QT/22.png"></p>
 <p>此时的 demo.exe 是无法运行的，双击它系统会提示类似“找不到 xxx.dll”的错误信息</p>
 <p>找到可执行文件之后，将其拷贝到一个空的文件夹， D:\QtDemo 文 件夹中</p>
-<p>![avatar](Introduction to QT&#x2F;23.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/23.png">
+
 <p>在“开始”中找到 Qt 命令行程序并打开</p>
-<p>![avatar](Introduction to QT&#x2F;24.png)<br>![avatar](Introduction to QT&#x2F;25.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/24.png">
+<img src="/2022/03/29/Introduction%20to%20QT/25.png">
+
 <p>在命令行中，先执行 “cd D:\QtDemo” 命令进入 QtDemo 文件夹， 然后再执行 “windeployqt demo.exe” 命令。 </p>
 <p><font color="red">windeployqt 是 Qt 提供的 Windows 平台打包工具，它能找到 demo.exe 可执行文件需要的所有动态链接库，并将它们拷贝到当 前文件夹中。</font></p>
-<p>![avatar](Introduction to QT&#x2F;26.png)</p>
-<p>成功执行命令之后，QtDemo 文件夹内会增加很多文件夹和文件，这些都是 demo.exe 执行所需要的。</p>
-<p>![avatar](Introduction to QT&#x2F;27.png)</p>
+<img src="/2022/03/29/Introduction%20to%20QT/26.png">
 
+<p>成功执行命令之后，QtDemo 文件夹内会增加很多文件夹和文件，这些都是 demo.exe 执行所需要的。</p>
+<img src="/2022/03/29/Introduction%20to%20QT/27.png">
       
     </div>
     <footer class="article-footer">
@@ -471,7 +528,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li></ul>
     </div>
   </div>
 
@@ -482,6 +539,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">QT数据库与QTableWidget结合的增删改查</a>
+          </li>
         
           <li>
             <a href="/2022/03/29/Introduction%20to%20QT/">(no title)</a>
