@@ -126,8 +126,7 @@
 <li>第一行定义一个<code>QSqlQuery</code>对象。</li>
 <li>第二行是一个<code>QString</code>，其中的内容是SQLite语句。对数据库的操作，都是用SQLite的语句完成的，把这些指令以QString类型，通过<code>prepare</code>函数，保存在QSqlQuery对象中。也可将指令，以QString形式直接写在<code>exec()</code>函数的参数中，例如：</li>
 </ol>
-<pre><code>```sql_query.exec(&quot;create table student (id int primary key, name varchar(30), age int)&quot;);```
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql_query.exec(&quot;create table student (id int primary key, name varchar(30), age int)&quot;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>创建表格语句：<code>create table &lt;table_name&gt; (f1 type1, f2 type2,…);</code><br><code>create table</code>是创建表格的语句，也可用大写<code>CREATE TABLE</code>；student是表格的名称，可以任意取；括号中是表格的格式，上述指令表明，表格中有三列，第一列的名称（表头）是id，这一列储存的数据类型是int，第二列名称是name，数据类型是字符数组，最多有30个字符（和char(30)的区别在于，varchar的实际长度是变化的，而char的长度始终是给定的值），第三列的名称是age，数据类型是int。<br>如果&#96;sql_query.exec()执行成功，则创建表格成功。</p>
 <ul>
 <li>插入数据<br>在刚才创建的表格中,插入一行数据.</li>
@@ -145,9 +144,9 @@
 <ul>
 <li>查询数据</li>
 </ul>
-<ul>
+<ol>
 <li><p>查询部分数据</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	QString select_sql = &quot;select id, name from student&quot;;</span><br><span class="line">if(!sql_query.exec(select_sql))</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    while(sql_query.next())</span><br><span class="line">    &#123;</span><br><span class="line">        int id = sql_query.value(0).toInt();</span><br><span class="line">        QString name = sql_query.value(1).toString();</span><br><span class="line">        qDebug()&lt;&lt;QString(&quot;id:%1    name:%2&quot;).arg(id).arg(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">QString select_sql = &quot;select id, name from student&quot;;</span><br><span class="line">if(!sql_query.exec(select_sql))</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    while(sql_query.next())</span><br><span class="line">    &#123;</span><br><span class="line">        int id = sql_query.value(0).toInt();</span><br><span class="line">        QString name = sql_query.value(1).toString();</span><br><span class="line">        qDebug()&lt;&lt;QString(&quot;id:%1    name:%2&quot;).arg(id).arg(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 语句<code>select &lt;f1&gt;, &lt;f2&gt;, ... from &lt;table_name&gt;</code>;</p>
 <p> <code>select</code>是查询指令；<code>&lt;f1&gt; </code>等等是要查询的变量（即表头），中间用逗号隔开；from …指定表格。<br> 上述语句是说查询student表中的 id 和 name 。执行查询之后，用<code>sql_query.value(int)</code>来获得数据。同样地，<code>value(0)</code>表示第一个数据，即 id，<code>value(1)</code>表示name。注意：<code>value()</code>函数的返回值类型是<code>QVariant</code>，因此要用<code>toInt()</code>等函数转换成特定的类型。</p>
 </li>
@@ -158,27 +157,28 @@
 </li>
 <li><p>查询最大id</p>
 </li>
-</ul>
+</ol>
   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> QString select_max_sql = &quot;select max(id) from student&quot;;</span><br><span class="line">int max_id = 0;</span><br><span class="line">sql_query.prepare(select_max_sql);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    while(sql_query.next())</span><br><span class="line">    &#123;</span><br><span class="line">        max_id = sql_query.value(0).toInt();</span><br><span class="line">        qDebug() &lt;&lt; QString(&quot;max id:%1&quot;).arg(max_id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<pre><code>- 删除和清空
+<ol start="4">
+<li>删除和清空</li>
+</ol>
+<ul>
+<li><p>删除一条数据</p>
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> QString delete_sql = &quot;delete from student where id = ?&quot;;</span><br><span class="line">sql_query.prepare(delete_sql);</span><br><span class="line">sql_query.addBindValue(0);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;&quot;deleted!&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
- * 删除一条数据
-
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> QString delete_sql = &quot;delete from student where id = ?&quot;;</span><br><span class="line">sql_query.prepare(delete_sql);</span><br><span class="line">sql_query.addBindValue(0);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;&quot;deleted!&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-    语句`delete from &lt;table_name&gt; where &lt;f1&gt; = &lt;value&gt;`
-
- * 清空表格(删除所有)
-
-    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">QString clear_sql = &quot;delete from student&quot;;</span><br><span class="line">sql_query.prepare(clear_sql);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; &quot;table cleared&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-    这里没有用where给出限制，就会删除所有内容。
-</code></pre>
-<h4 id="2-4-关闭数据库"><a href="#2-4-关闭数据库" class="headerlink" title="2.4 关闭数据库"></a>2.4 关闭数据库</h4><p><code>   database.close();</code></p>
+<p>  语句<code>delete from &lt;table_name&gt; where &lt;f1&gt; = &lt;value&gt;</code></p>
+</li>
+<li><p>清空表格(删除所有)</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">QString clear_sql = &quot;delete from student&quot;;</span><br><span class="line">sql_query.prepare(clear_sql);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; &quot;table cleared&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  这里没有用where给出限制，就会删除所有内容。</p>
+</li>
+</ul>
+<h4 id="2-4-关闭数据库"><a href="#2-4-关闭数据库" class="headerlink" title="2.4 关闭数据库"></a>2.4 关闭数据库</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">database.close();</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="cl1pvi02l0000tawsgpi1h0tn" data-title="QT数据库Sqlite的增删改查" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="cl1pvmiud00003ews6drc6qo1" data-title="QT数据库Sqlite的增删改查" class="article-share-link">Share</a>
       
       
       
@@ -266,7 +266,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/03/29/Create-QT-and-call-dll-methods/" data-id="cl1pvi03h0002taws4h9uammy" data-title="Create and call dll methods" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/03/29/Create-QT-and-call-dll-methods/" data-id="cl1pvmivc00023ewsckebgyka" data-title="Create and call dll methods" class="article-share-link">Share</a>
       
       
       
@@ -599,7 +599,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/03/25/Introduction-to-QT/" data-id="cl1pvi02q0001tawsglysg1iz" data-title="Introduction to QT" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/03/25/Introduction-to-QT/" data-id="cl1pvmiui00013ews6g1v8sm4" data-title="Introduction to QT" class="article-share-link">Share</a>
       
       
       
