@@ -85,7 +85,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">QT数据库与QTableWidget结合的增删改查</a>
+      <a class="p-name article-title" href="/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">QT数据库Sqlite的增删改查</a>
     </h1>
   
 
@@ -93,11 +93,93 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p>###1 准备<br>####1.1 引入SQL模块<br>在Qt项目文件(.pro文件)中,加入SQL模块:</p>
+<p><code>QT += sql</code></p>
+<p>####1.2 引用头文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;QSqlDatabase&gt;</span><br><span class="line">#include &lt;QSqlError&gt;</span><br><span class="line">#include &lt;QSqlQuery&gt;</span><br></pre></td></tr></table></figure>
+
+<p>###2 使用<br>####2.1 建立数据库<br>检查链接、添加数据库驱动、设置数据库名称、数据库登录用户名、密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">QSqlDatabase database;</span><br><span class="line">if (QSqlDatabase::contains(&quot;qt_sql_default_connection&quot;))</span><br><span class="line">&#123;</span><br><span class="line">    database = QSqlDatabase::database(&quot;qt_sql_default_connection&quot;);</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    database = QSqlDatabase::addDatabase(&quot;QSQLITE&quot;);</span><br><span class="line">    database.setDatabaseName(&quot;MyDataBase.db&quot;);</span><br><span class="line">    database.setUserName(&quot;XingYeZhiXia&quot;);</span><br><span class="line">    database.setPassword(&quot;123456&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>第一行中，建立了一个<code>QSqlDatabase</code>对象，后续的操作要使用这个对象。</p>
+</li>
+<li><p><code>if</code>语句用来检查指定的连接(connection)是否存在。这里指定的连接名称（connection name）是<code>qt_sql_default_connection</code>，这是Qt默认连接名称。实际使用时，这个名称可以任意取。如果判断此连接已经存在，那么<code>QSqlDatabase::contains()</code>函数返回true。此时，进入第一个分支，<code>QSqlDatabase::database()</code>返回这个连接。</p>
+</li>
+<li><p>如果这个连接不存在，则进入<code>else</code>分支，需要创建连接，并添加数据库。在<code>else</code>分支第一行，<code>addDatabase()</code>的参数<code>QSQLITE</code>是SQLite对应的驱动名，不能改。而且需要注意的是，<code>addDatabase()</code>的第二个参数被省略了，第二个参数的默认参数就是上面提到的Qt默认连接名称<code>qt_sql_default_connection</code>。如果需要使用自定义的连接名称（如果程序需要处理多个数据库文件的话就会这样），则应该加入第二个参数，例如<br><code>database = QSqlDatabase::addDatabase(&quot;QSQLITE&quot;, &quot;my_sql_connection);</code><br>这个时候，如果在另一个地方需要判断<code>my_sql_connection</code>连接是否存在，就应该使用<code>if (QSqlDatabase::contains(&quot;my_sql_connection&quot;))。</code></p>
+</li>
+<li><p><code>else</code>分支第二行中，<code>setDatabaseName()</code>的参数是数据库文件名。如果这个数据库不存在，则会在后续操作时自动创建；如果已经存在，则后续的操作会在已有的数据库上进行。</p>
+</li>
+<li><p><code>else</code>分支后面两行，设置用户名和密码。用户名，密码都可以随便取，也可以省略。</p>
+</li>
+</ul>
+<h4 id="2-2-打开数据库"><a href="#2-2-打开数据库" class="headerlink" title="2.2 打开数据库"></a>2.2 打开数据库</h4><p>使用<code>open()</code>打开数据库，并判断是否成功。注意，在第一步检查连接是否存在时，如果连接存在，则在返回这个连接的时候，会默认将数据库打开。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (!database.open())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; &quot;Error: Failed to connect database.&quot; &lt;&lt; database.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果打开成功，则进入else分支。对数据库的操作都需要在else分支中进行。</p>
+<h4 id="2-3操作数据库"><a href="#2-3操作数据库" class="headerlink" title="2.3操作数据库"></a>2.3操作数据库</h4><p>对数据库进行操作需要用到QSqlQuery类，操作前必须定义一个对象。</p>
+<ul>
+<li>创建表格</li>
+</ul>
+<p>创建一个名为student的表格，表格包含三列，第一列是id，第二列是名字，第三列是年龄.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">QSqlQuery sql_query;</span><br><span class="line">QString create_sql = &quot;create table student (id int primary key, name varchar(30), age int)&quot;;</span><br><span class="line">sql_query.prepare(create_sql);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; &quot;Error: Fail to create table.&quot; &lt;&lt; sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; &quot;Table created!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>第一行定义一个<code>QSqlQuery</code>对象。</li>
+<li>第二行是一个<code>QString</code>，其中的内容是SQLite语句。对数据库的操作，都是用SQLite的语句完成的，把这些指令以QString类型，通过<code>prepare</code>函数，保存在QSqlQuery对象中。也可将指令，以QString形式直接写在<code>exec()</code>函数的参数中，例如：</li>
+</ol>
+<pre><code>```sql_query.exec(&quot;create table student (id int primary key, name varchar(30), age int)&quot;);```
+</code></pre>
+<p>创建表格语句：<code>create table &lt;table_name&gt; (f1 type1, f2 type2,…);</code><br><code>create table</code>是创建表格的语句，也可用大写<code>CREATE TABLE</code>；student是表格的名称，可以任意取；括号中是表格的格式，上述指令表明，表格中有三列，第一列的名称（表头）是id，这一列储存的数据类型是int，第二列名称是name，数据类型是字符数组，最多有30个字符（和char(30)的区别在于，varchar的实际长度是变化的，而char的长度始终是给定的值），第三列的名称是age，数据类型是int。<br>如果&#96;sql_query.exec()执行成功，则创建表格成功。</p>
+<ul>
+<li>插入数据<br>在刚才创建的表格中,插入一行数据.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">QString insert_sql = &quot;insert into student values (?, ?, ?)&quot;;</span><br><span class="line">sql_query.prepare(insert_sql);</span><br><span class="line">sql_query.addBindValue(1);</span><br><span class="line">sql_query.addBindValue(&quot;Chen&quot;);</span><br><span class="line">sql_query.addBindValue(18);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; &quot;inserted Chen!&quot;;</span><br><span class="line">&#125;</span><br><span class="line">if(!sql_query.exec(&quot;INSERT INTO student VALUES(2, \&quot;Li\&quot;, 23)&quot;))</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; &quot;inserted Li!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>插入语句：<code>insert into &lt;table_name&gt; values (value1, value2,…);</code><br><code>insert into</code>是插入语句，student是表格名称，values()是要插入的数据。这里，我们插入了2组数据。插入第一组数据的时候，用<code>addBindValue</code>来替代语句中的?，替代的顺序与<code>addBindValue</code>调用的顺序相同。插入第二组数据的时候，则是直接写出完整语句。</p>
+<ul>
+<li>更新数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">QString update_sql = &quot;update student set name = :name where id = :id&quot;;</span><br><span class="line">sql_query.prepare(update_sql);</span><br><span class="line">sql_query.bindValue(&quot;:name&quot;, &quot;Qt&quot;);</span><br><span class="line">sql_query.bindValue(&quot;:id&quot;, 1);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; &quot;updated!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>语句：<code>update &lt;table_name&gt; set &lt;f1=value1&gt;, &lt;f2=value2&gt;… where &lt;expression&gt;</code>;<br>更新（修改）的语句是<code>update...set...</code>，其中student是表格名称，name是表头名称（即第二列），:name是待定的变量，where用于确定是哪一组数据，:id也是待定变量。<br><code>bindValue(&quot; &quot;, &quot; &quot;)</code>函数用来把语句中的待定变量换成确定值。<br>也可以直接写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql_query.exec(&quot;update student set name = &#x27;lll&#x27; where id = 2&quot;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询数据</li>
+</ul>
+<ul>
+<li><p>查询部分数据</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	QString select_sql = &quot;select id, name from student&quot;;</span><br><span class="line">if(!sql_query.exec(select_sql))</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    while(sql_query.next())</span><br><span class="line">    &#123;</span><br><span class="line">        int id = sql_query.value(0).toInt();</span><br><span class="line">        QString name = sql_query.value(1).toString();</span><br><span class="line">        qDebug()&lt;&lt;QString(&quot;id:%1    name:%2&quot;).arg(id).arg(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 语句<code>select &lt;f1&gt;, &lt;f2&gt;, ... from &lt;table_name&gt;</code>;</p>
+<p> <code>select</code>是查询指令；<code>&lt;f1&gt; </code>等等是要查询的变量（即表头），中间用逗号隔开；from …指定表格。<br> 上述语句是说查询student表中的 id 和 name 。执行查询之后，用<code>sql_query.value(int)</code>来获得数据。同样地，<code>value(0)</code>表示第一个数据，即 id，<code>value(1)</code>表示name。注意：<code>value()</code>函数的返回值类型是<code>QVariant</code>，因此要用<code>toInt()</code>等函数转换成特定的类型。</p>
+</li>
+<li><p>查询全部数据</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">	QString select_all_sql = &quot;select * from student&quot;;</span><br><span class="line">sql_query.prepare(select_all_sql);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    while(sql_query.next())</span><br><span class="line">    &#123;</span><br><span class="line">        int id = sql_query.value(0).toInt();</span><br><span class="line">        QString name = sql_query.value(1).toString();</span><br><span class="line">        int age = sql_query.value(2).toInt();</span><br><span class="line">        qDebug()&lt;&lt;QString(&quot;id:%1    name:%2    age:%3&quot;).arg(id).arg(name).arg(age);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 语句<code>select * from &lt;table_name&gt;</code>;</p>
+<p> 查询所有数据用 * 表示。用<code>while(sql_query.next())</code>用来遍历所有行。同样用<code>value()</code>获得数据。</p>
+</li>
+<li><p>查询最大id</p>
+</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> QString select_max_sql = &quot;select max(id) from student&quot;;</span><br><span class="line">int max_id = 0;</span><br><span class="line">sql_query.prepare(select_max_sql);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    while(sql_query.next())</span><br><span class="line">    &#123;</span><br><span class="line">        max_id = sql_query.value(0).toInt();</span><br><span class="line">        qDebug() &lt;&lt; QString(&quot;max id:%1&quot;).arg(max_id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>- 删除和清空
+
+ - 删除一条数据
+ 
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> QString delete_sql = &quot;delete from student where id = ?&quot;;</span><br><span class="line">sql_query.prepare(delete_sql);</span><br><span class="line">sql_query.addBindValue(0);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    qDebug()&lt;&lt;&quot;deleted!&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+语句`delete from &lt;table_name&gt; where &lt;f1&gt; = &lt;value&gt;`
+
+ - 清空表格(删除所有)
+
+    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">QString clear_sql = &quot;delete from student&quot;;</span><br><span class="line">sql_query.prepare(clear_sql);</span><br><span class="line">if(!sql_query.exec())</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; sql_query.lastError();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    qDebug() &lt;&lt; &quot;table cleared&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    这里没有用where给出限制，就会删除所有内容。
+</code></pre>
+<p>####2.4 关闭数据库</p>
+<p><code>   database.close();</code></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="cl1ps5rse0000osws32br0d5r" data-title="QT数据库与QTableWidget结合的增删改查" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="cl1pvb1sq0000t6wshrsg6e8r" data-title="QT数据库Sqlite的增删改查" class="article-share-link">Share</a>
       
       
       
@@ -185,7 +267,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/03/29/Create-QT-and-call-dll-methods/" data-id="cl1ps5rta0002osws3pi25hih" data-title="Create and call dll methods" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/03/29/Create-QT-and-call-dll-methods/" data-id="cl1pvb1tl0002t6wsahiubxa9" data-title="Create and call dll methods" class="article-share-link">Share</a>
       
       
       
@@ -518,7 +600,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/03/25/Introduction-to-QT/" data-id="cl1ps5rsj0001oswsacxpgkno" data-title="Introduction to QT" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/03/25/Introduction-to-QT/" data-id="cl1pvb1sv0001t6wsg3pa8e40" data-title="Introduction to QT" class="article-share-link">Share</a>
       
       
       
@@ -561,7 +643,7 @@
       <ul>
         
           <li>
-            <a href="/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">QT数据库与QTableWidget结合的增删改查</a>
+            <a href="/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EQTableWidget%E7%BB%93%E5%90%88%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">QT数据库Sqlite的增删改查</a>
           </li>
         
           <li>
