@@ -71,6 +71,73 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-QDialog模态对话框和非模态对话框:accept()和exec()" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/04/08/QDialog%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86%E5%92%8C%E9%9D%9E%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86:accept()%E5%92%8Cexec()/" class="article-date">
+  <time class="dt-published" datetime="2022-04-08T08:40:59.000Z" itemprop="datePublished">2022-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/04/08/QDialog%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86%E5%92%8C%E9%9D%9E%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86:accept()%E5%92%8Cexec()/">QDialog模态对话框和非模态对话框/accept()和exec()</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>非模式对话框（Modeless Dialog）</p>
+<p> 非模式对话框是和同一个程序中其它窗口操作无关的对话框。在字处理软件中查找和替换对话框通常是非模式的来允许同时与应用程序主窗口和对话框进行交互。调用show()来显示非模式对话框。show()立即返回，这样调用代码中的控制流将会继续。<br>非模式对话框，说白了，就像你打开了好几个QQ聊天窗口，每个聊天窗口都是一个非模式对话框，想和谁聊和谁聊，只要点击那个窗口就可以输入聊天信息进行发送了。</p>
+</li>
+<li><p>模式对话框（Modal Dialog）</p>
+<p> 模式对话框就是阻塞同一应用程序中其它可视窗口的输入的对话框：用户必须完成这个对话框中的交互操作并且关闭了它之后才能访问应用程序中的其它任何窗口。模式对话框有它们自己的本地事件循环。用来让用户选择一个文件或者用来设置应用程序参数的对话框通常是模式的。调用exec()来显示模式对话框。当用户关闭这个对话框，exec()将提供一个可用的返回值并且这时流程控制继续从调用exec()的地方进行。通常，我们连接默认按钮，例如“OK”到accept()槽并且把“Cancel”连接到reject()槽，来使对话框关闭并且返回适当的值。另外我们也可以连接done()槽，传递给它Accepted或Rejected。</p>
+</li>
+</ul>
+<p>在Qt中，显示一个对话框一般有两种方式，一种是使用exec()方法，它总是以模态来显示对话框；另一种是使用show()方法，它使得对话框既可以模态显示，也可以非模态显示，决定它是模态还是非模态的是对话框的modal属性。</p>
+<p>在Qt中，Qt的模态与非模态对话框选择是通过其属性modal来确定的。我们来看看modal属性，其定义如下：</p>
+<p>modal : bool默认情况下，对话框的该属性值是false，这时通过show()方法显示的对话框就是非模态的。而如果将该属性值设置为true，就设置成了模态对话框，其作用于把QWidget::windowModality属性设置为Qt::ApplicationModal。</p>
+<p>而使用exec()方法显示对话框的话，将忽略modal属性值的设置并把对话框设置为模态对话框。</p>
+<p>一般使用setModal()方法来设置对话框的modal属性。</p>
+<p>◆ 如果要设置为模态对话框，最简单的就是使用exec()方法，示例代码如下：</p>
+<p>MyDialog myDlg; myDlg.exec();也可以使用show()方法，示例代码如下：</p>
+<p>MyDialog myDlg; myDlg.setModal(true); myDlg.show();</p>
+<p>(1) 方法：<br>让子类继承 QDialog  基类 包含头文件 include<QDialog><br>(2) 在构造函数中，添加如下一句：</QDialog></p>
+<p>this-&gt;setModal(true);</p>
+<p>(3)调用show函数显示该窗口，显现出来的就是 模态对话框，该窗口不关闭，其他窗口不能运行！！！</p>
+<hr>
+<ul>
+<li>accept()</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void LoginDialog::on_pushButton_clicked()</span><br><span class="line">&#123;</span><br><span class="line">    accept();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>accept（）的作用是：是槽函数。其作用是将当前的窗口隐藏（这样就做到子窗口功能消失这个功能），并且发送accepted信号。</p>
+<ul>
+<li>exec()</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LoginDialog dlg;   //创建一个指向子窗口的对象</span><br><span class="line">dlg.exec();    //my1.exec()的意思是：执行模式对话框。按照之前对模式对话框的讲述，</span><br><span class="line">               //my1.exec（）的意思就是，显示子窗口，并在这里阻塞住，直到该窗口被关闭之后</span><br><span class="line">               //（隐藏也可以），才继续往下运行！</span><br><span class="line">w.show();//显示主对话框</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/04/08/QDialog%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86%E5%92%8C%E9%9D%9E%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86:accept()%E5%92%8Cexec()/" data-id="cl1q73jne0001o7wsedufbqav" data-title="QDialog模态对话框和非模态对话框/accept()和exec()" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-QT数据库Sqlite的增删改查" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93Sqlite%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" class="article-date">
@@ -178,7 +245,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93Sqlite%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="cl1pvpmh700001rwsefaq5wdm" data-title="QT数据库Sqlite的增删改查" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93Sqlite%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" data-id="cl1q73jna0000o7ws5wub6xs2" data-title="QT数据库Sqlite的增删改查" class="article-share-link">Share</a>
       
       
       
@@ -266,7 +333,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/03/29/Create-QT-and-call-dll-methods/" data-id="cl1pvpmia00021rwsgib87y1a" data-title="Create and call dll methods" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/03/29/Create-QT-and-call-dll-methods/" data-id="cl1q73jo50003o7ws2ted48oq" data-title="Create and call dll methods" class="article-share-link">Share</a>
       
       
       
@@ -599,7 +666,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/03/25/Introduction-to-QT/" data-id="cl1pvpmhd00011rws7xta1cwz" data-title="Introduction to QT" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/03/25/Introduction-to-QT/" data-id="cl1q73jng0002o7wseqkwhlol" data-title="Introduction to QT" class="article-share-link">Share</a>
       
       
       
@@ -640,6 +707,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/04/08/QDialog%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86%E5%92%8C%E9%9D%9E%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86:accept()%E5%92%8Cexec()/">QDialog模态对话框和非模态对话框/accept()和exec()</a>
+          </li>
         
           <li>
             <a href="/2022/04/08/QT%E6%95%B0%E6%8D%AE%E5%BA%93Sqlite%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">QT数据库Sqlite的增删改查</a>
