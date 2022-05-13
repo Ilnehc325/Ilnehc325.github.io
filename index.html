@@ -71,6 +71,114 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-QT信号与槽" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/12/QT%E4%BF%A1%E5%8F%B7%E4%B8%8E%E6%A7%BD/" class="article-date">
+  <time class="dt-published" datetime="2022-05-12T10:49:12.000Z" itemprop="datePublished">2022-05-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/12/QT%E4%BF%A1%E5%8F%B7%E4%B8%8E%E6%A7%BD/">QT信号与槽</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="信号与槽函数"><a href="#信号与槽函数" class="headerlink" title="信号与槽函数"></a>信号与槽函数</h3><p>信号槽是 Qt 框架引以为豪的机制之一。所谓信号槽，实际就是观察者模式。当某个事件发生之后，比如，按钮检测到自己被点击了一下，它就会发出一个信号（signal）。这种发出是没有目的的，类似广播。如果有对象对这个信号感兴趣，它就会使用连接（connect）函数，意思是，将想要处理的信号和自己的一个函数（称为槽（slot））绑定来处理这个信号。也就是说，当信号发出时，被连接的槽函数会自动被回调。这就类似观察者模式：当发生了感兴趣的事件，某一个操作就会被自动触发。</p>
+<p>槽函数和普通的C++成员函数没有很大的区别。它们也可以使virtual的；可以被重写；可以使public、protected或者 private的；可以由其它的C++函数调用；参数可以是任何类型的。如果要说区别，那就是，槽函数可以和一个信号相连接，当这个信号发生时，它可以被自动调用。</p>
+<ul>
+<li>virtual:是定义C++中虚函数的关键字 。在面向对象程序设计领域，C++、Object Pascal 等语言中有虚函数（英语：virtual function）或虚方法（英语：virtual method）的概念。这种函数或方法可以被子类继承和覆盖，通常使用动态调度实现。这一概念是面向对象程序设计中（运行时）多态的重要组成部分。简言之，虚函数可以给出目标函数的定义，但该目标的具体指向在编译期可能无法确定。</li>
+</ul>
+<h4 id="1-系统自带的信号和槽"><a href="#1-系统自带的信号和槽" class="headerlink" title="1.系统自带的信号和槽"></a>1.系统自带的信号和槽</h4><p>比如我们点击按钮，就把当前的窗口给关闭掉，那么在Qt中，这样的功能如何实现呢？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QPushButton * quitBtn = new QPushButton(&quot;关闭窗口&quot;,this);</span><br><span class="line">connect(quitBtn,&amp;QPushButton::clicked,this,&amp;MyWidget::close);</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/05/12/QT%E4%BF%A1%E5%8F%B7%E4%B8%8E%E6%A7%BD/1.png">
+
+<p>第一行是创建一个关闭按钮，第二行就是核心了，也就是信号槽的使用方式<br>    connect()函数最常用的一般形式：</p>
+<pre><code>`connect(sender, signal, receiver, slot);`
+</code></pre>
+<p>参数解释：</p>
+<ul>
+<li>sender：发出信号的对象</li>
+<li>signal：发送对象发出的信号</li>
+<li>receiver：接收信号的对象</li>
+<li>slot：接收对象在接收到信号之后所需要调用的函数（槽函数）</li>
+</ul>
+<p>那么系统自带的信号和槽通常如何查找呢，这个就需要利用帮助文档了(在开始菜单中找到“Qt 5.9.0–&gt;5.9–&gt;MinGW 5.3.0 (32-bit)–&gt;Assistant”，或者在 Qt 命令行工具中运行 assistant 命令，都可以打开独立的 Qt 助手程序，这就是帮助文档的浏览查阅软件，并且可以添加新的 Qt 相关文档。<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/4003.html">http://c.biancheng.net/view/4003.html</a>)</p>
+<p>在帮助文档中比如我们上面的按钮的点击信号，在帮助文档中输入QPushButton，首先我们可以在Contents中寻找关键字 signals，信号的意思，但是我们发现并没有找到，这时候我们应该想到也许这个信号的被父类继承下来的，因此我们去他的父类QAbstractButton中就可以找到该关键字，点击signals索引到系统自带的信号有如下几个</p>
+<img src="/2022/05/12/QT%E4%BF%A1%E5%8F%B7%E4%B8%8E%E6%A7%BD/2.png">
+
+<img src="/2022/05/12/QT%E4%BF%A1%E5%8F%B7%E4%B8%8E%E6%A7%BD/3.png">
+
+<p>这里的clicked就是我们要找到，槽函数的寻找方式和信号一样，只不过他的关键字是slot。</p>
+<h4 id="2-自定义信号和槽"><a href="#2-自定义信号和槽" class="headerlink" title="2.自定义信号和槽"></a>2.自定义信号和槽</h4><p>使用connect()可以让我们连接系统提供的信号和槽。但是，Qt 的信号槽机制并不仅仅是使用系统提供的那部分，还会允许我们自己设计自己的信号和槽。</p>
+<img src="/2022/05/12/QT%E4%BF%A1%E5%8F%B7%E4%B8%8E%E6%A7%BD/4.png">
+
+<p>自定义信号槽需要注意的事项：</p>
+<ul>
+<li>发送者和接收者都需要是QObject的子类（当然，槽函数是全局函数、Lambda 表达式等无需接收者的时候除外）；</li>
+<li>信号和槽函数返回值是 void</li>
+<li>信号只需要声明，不需要实现</li>
+<li>槽函数需要声明也需要实现</li>
+<li>槽函数是普通的成员函数，作为成员函数，会受到 public、private、protected 的影响；</li>
+<li>使用 emit 在恰当的位置发送信号；</li>
+<li>使用connect()函数连接信号和槽。</li>
+<li>任何成员函数、static 函数、全局函数和 Lambda 表达式都可以作为槽函数</li>
+<li>信号槽要求信号和槽的参数一致，所谓一致，是参数类型一致。</li>
+<li>如果信号和槽的参数不一致，允许的情况是，槽函数的参数可以比信号的少，即便如此，槽函数存在的那些参数的顺序也必须和信号的前面几个一致起来。这是因为，你可以在槽函数中选择忽略信号传来的数据（也就是槽函数的参数比信号的少）。</li>
+</ul>
+<h4 id="3-信号槽的拓展"><a href="#3-信号槽的拓展" class="headerlink" title="3.信号槽的拓展"></a>3.信号槽的拓展</h4><ul>
+<li>一个信号可以和多个槽相连<br>如果是这种情况，这些槽会一个接一个的被调用，但是它们的调用顺序是不确定的。</li>
+<li>多个信号可以连接到一个槽<br>只要任意一个信号发出，这个槽就会被调用。</li>
+<li>一个信号可以连接到另外的一个信号<br>当第一个信号发出时，第二个信号被发出。除此之外，这种信号-信号的形式和信号-槽的形式没有什么区别。</li>
+<li>槽可以被取消链接<br>这种情况并不经常出现，因为当一个对象delete之后，Qt自动取消所有连接到这个对象上面的槽。</li>
+<li>信号槽可以断开<br>利用disconnect关键字是可以断开信号槽的</li>
+<li>使用Lambda 表达式<br>在使用 Qt 5 的时候，能够支持 Qt 5 的编译器都是支持 Lambda 表达式的。<br>  在连接信号和槽的时候，槽函数可以使用Lambda表达式的方式进行处理。后面我们会详细介绍什么是Lambda表达式</li>
+</ul>
+<h4 id="4-Qt4版本的信号槽写法"><a href="#4-Qt4版本的信号槽写法" class="headerlink" title="4.Qt4版本的信号槽写法"></a>4.Qt4版本的信号槽写法</h4><p><code>connect(zt,SIGNAL(hungry(QString)),st,SLOT(treat(QString)));</code></p>
+<p>这里使用了SIGNAL和SLOT这两个宏，将两个函数名转换成了字符串。注意到connect()函数的 signal 和 slot 都是接受字符串，一旦出现连接不成功的情况，Qt4是没有编译错误的（因为一切都是字符串，编译期是不检查字符串是否匹配），而是在运行时给出错误。这无疑会增加程序的不稳定性。<br>Qt5在语法上完全兼容Qt4，而反之是不可以的。</p>
+<h4 id="5-Lambda表达式"><a href="#5-Lambda表达式" class="headerlink" title="5.Lambda表达式"></a>5.Lambda表达式</h4><p>C++11中的Lambda表达式用于定义并创建匿名的函数对象，以简化编程工作。首先看一下Lambda表达式的基本构成：<br><a href="parameters">capture</a> mutable -&gt;return-type<br>{<br>statement<br>}<br><a href="%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0">函数对象参数</a>mutable -&gt;返回值{函数体}</p>
+<p>① 函数对象参数；</p>
+<ul>
+<li>[]，标识一个Lambda的开始，这部分必须存在，不能省略。函数对象参数是传递给编译器自动生成的函数对象类的构造函数的。函数对象参数只能使用那些到定义Lambda为止时Lambda所在作用范围内可见的局部变量（包括Lambda所在类的this）。函数对象参数有以下形式：</li>
+<li>空。没有使用任何函数对象参数。</li>
+<li>&#x3D;。函数体内可以使用Lambda所在作用范围内所有可见的局部变量（包括Lambda所在类的this），并且是值传递方式（相当于编译器自动为我们按值传递了所有局部变量）。</li>
+<li>&amp;。函数体内可以使用Lambda所在作用范围内所有可见的局部变量（包括Lambda所在类的this），并且是引用传递方式（相当于编译器自动为我们按引用传递了所有局部变量）。</li>
+<li>this。函数体内可以使用Lambda所在类中的成员变量。</li>
+<li>a。将a按值进行传递。按值进行传递时，函数体内不能修改传递进来的a的拷贝，因为默认情况下函数是const的。要修改传递进来的a的拷贝，可以添加mutable修饰符。</li>
+<li>&amp;a。将a按引用进行传递。</li>
+<li>a, &amp;b。将a按值进行传递，b按引用进行传递。</li>
+<li>&#x3D;，&amp;a, &amp;b。除a和b按引用进行传递外，其他参数都按值进行传递。</li>
+<li>&amp;, a, b。除a和b按值进行传递外，其他参数都按引用进行传递。<br>② 操作符重载函数参数；<br>标识重载的()操作符的参数，没有参数时，这部分可以省略。参数可以通过按值（如：(a,b)）和按引用（如：(&amp;a,&amp;b)）两种方式进行传递。<br>③ 可修改标示符；<br>mutable声明，这部分可以省略。按值传递函数对象参数时，加上mutable修饰符后，可以修改按值传递进来的拷贝（注意是能修改拷贝，而不是值本身)。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">QPushButton * myBtn = new QPushButton (this);</span><br><span class="line">QPushButton * myBtn2 = new QPushButton (this);</span><br><span class="line">myBtn2-&gt;move(100,100);</span><br><span class="line">int m = 10;</span><br><span class="line"></span><br><span class="line">connect(myBtn,&amp;QPushButton::clicked,this,[m] ()mutable &#123; m = 20; qDebug() &lt;&lt; m; &#125;);</span><br><span class="line"></span><br><span class="line">connect(myBtn2,&amp;QPushButton::clicked,this,[=] ()  &#123; qDebug() &lt;&lt; m; &#125;);</span><br><span class="line"></span><br><span class="line">qDebug() &lt;&lt; m;</span><br></pre></td></tr></table></figure>
+
+<p>④ 函数返回值；<br>-&gt;返回值类型，标识函数返回值的类型，当返回值为void，或者函数体中只有一处return的地方（此时编译器可以自动推断出返回值类型）时，这部分可以省略。<br>⑤ 是函数体；<br>    {}，标识函数的实现，这部分不能省略，但函数体可以为空。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/12/QT%E4%BF%A1%E5%8F%B7%E4%B8%8E%E6%A7%BD/" data-id="cl3494r340000btws7plg03bt" data-title="QT信号与槽" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-QT-窗口跳转方式" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/04/22/QT-%E7%AA%97%E5%8F%A3%E8%B7%B3%E8%BD%AC%E6%96%B9%E5%BC%8F/" class="article-date">
@@ -776,7 +884,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li></ul>
     </div>
   </div>
 
@@ -787,6 +895,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/05/12/QT%E4%BF%A1%E5%8F%B7%E4%B8%8E%E6%A7%BD/">QT信号与槽</a>
+          </li>
         
           <li>
             <a href="/2022/04/22/QT-%E7%AA%97%E5%8F%A3%E8%B7%B3%E8%BD%AC%E6%96%B9%E5%BC%8F/">QT 窗口跳转方式</a>
@@ -802,10 +914,6 @@
         
           <li>
             <a href="/2022/03/29/Create-QT-and-call-dll-methods/">Create and call dll methods</a>
-          </li>
-        
-          <li>
-            <a href="/2022/03/25/Introduction-to-QT/">Introduction to QT</a>
           </li>
         
       </ul>
